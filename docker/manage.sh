@@ -107,13 +107,13 @@ usage() {
     
       logs - Display the logs from the docker compose run (ctrl-c to exit).
 
-      start - Runs the containers in production mode.
+      start - Runs the containers in local mode for locally running ledger.
       up - Same as start.
       
-      start-dev - Runs a live development version of the containers, with hot-reloading
-              enabled.
+      start-dev - Runs the containers in production mode, using the ledger and
+              exposing the agent to the Internet using firewall settings.
 
-      start-demo - Runs the containers in production mode, using the BCovrin Test ledger and
+      start-demo - Runs the containers in production mode, using the ledger and
               exposing the agent to the Internet using ngrok.
 
       stop - Stops the services.  This is a non-destructive process.  The volumes and containers
@@ -199,6 +199,7 @@ configureEnvironment() {
   export AGENT_NAME="infrastructure"
   public_ip=$(curl -s ifconfig.io)
   export AGENT_ENDPOINT=${NGROK_AGENT_ENDPOINT:-http://$public_ip:$AGENT_HTTP_INTERFACE_PORT}
+  echo ${AGENT_ENDPOINT}
   export AGENT_ADMIN_MODE="admin-insecure-mode"
   
 }
@@ -389,25 +390,24 @@ case "${COMMAND}" in
 
     #Generating Infrastructure
     echo "Creating Infrastructure"
-    #
 
     export LEDGER_URL="http://test.bcovrin.vonx.io"
     export TAILS_SERVER_URL="https://tails-dev.vonx.io"
     if [[ ! -f ".env" ]]; then
-      ACAPY_WALLET_SEED=$(generateSeed issuer-kit-demo)
+      ACAPY_WALLET_SEED=$(generateSeed infrastructure)
       echo "Generated ACAPY_WALLET_SEED=${ACAPY_WALLET_SEED}"
       echo "ACAPY_WALLET_SEED=${ACAPY_WALLET_SEED}" > .env
     fi
 
-    #unset NGROK_AGENT_ENDPOINT
+    unset NGROK_AGENT_ENDPOINT
 
-    #if [ -z "$NGROK_AGENT_ENDPOINT" ]; then
-    #  isNgrokInstalled
-    #  export NGROK_AGENT_ENDPOINT=$(${CURL_EXE} http://localhost:4040/api/tunnels | ${JQ_EXE} --raw-output '.tunnels | map(select(.name | contains("issuer-agent"))) | .[0] | .public_url')
-    #  echo $NGROK_AGENT_ENDPOINT
-    #fi
+    if [ -z "$NGROK_AGENT_ENDPOINT" ]; then
+      isNgrokInstalled
+      export NGROK_AGENT_ENDPOINT=$(${CURL_EXE} http://localhost:4040/api/tunnels | ${JQ_EXE} --raw-output '.tunnels | map(select(.name | contains("infrastructure-agent"))) | .[0] | .public_url')
+      echo $NGROK_AGENT_ENDPOINT
+    fi
     
-    #checkNgrokTunnelActive
+    checkNgrokTunnelActive
     echo "Running in demo mode, will use ${LEDGER_URL} as ledger and ${NGROK_AGENT_ENDPOINT} as the agent endpoint."
 
     configureEnvironment "$@"

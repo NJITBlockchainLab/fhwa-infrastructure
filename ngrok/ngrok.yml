@@ -1,0 +1,6 @@
+tunnels:
+  infrastructure-agent:
+    addr: 8051
+    proto: http
+    bind-tls: true
+version: "1"
