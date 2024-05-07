@@ -199,7 +199,6 @@ configureEnvironment() {
   export AGENT_NAME="infrastructure"
   public_ip=$(curl -s ifconfig.io)
   export AGENT_ENDPOINT=${NGROK_AGENT_ENDPOINT:-http://$public_ip:$AGENT_HTTP_INTERFACE_PORT}
-  echo ${AGENT_ENDPOINT}
   export AGENT_ADMIN_MODE="admin-insecure-mode"
   
 }
