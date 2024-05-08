@@ -28,6 +28,14 @@ With these dedicated connections in place, the infrastructure gains the capabili
 `./setup`
 
 If using Windows follow steps in setup.txt.
+
+
+Also run 
+
+`pip install -r requirements.txt`
+
+in the main folder.
+
 2. In the docker folder there is manage script.
 Run
 
