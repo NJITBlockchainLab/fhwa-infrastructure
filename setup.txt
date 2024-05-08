@@ -1,0 +1,15 @@
+I. Install Docker
+
+https://docs.docker.com/desktop/install/windows-install/
+
+II. Install JQ
+
+https://jqlang.github.io/jq/download/
+
+III. Install ngrok
+
+https://ngrok.com/download
+
+IV. Install Git Bash
+
+https://git-scm.com/downloads
