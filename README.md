@@ -36,12 +36,7 @@ Also run
 
 in the main folder.
 
-2. In the docker folder there is manage script.
-Run
-
-`./manage build`
-
-to build the docker images
+2. 
 
 If in Windows use Git Bash to run Shell scripts.
 
