@@ -36,9 +36,13 @@ Also run
 
 in the main folder.
 
+eventlog
 Save the CSV file folder path as an environment variable CSV_PATH
 
 2. In the docker folder there is manage script to build the docker images
+=======
+2. 
+main
 
 If in Windows use Git Bash to run Shell scripts.
 
