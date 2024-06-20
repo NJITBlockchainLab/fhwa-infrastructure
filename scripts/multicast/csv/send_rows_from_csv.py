@@ -9,18 +9,21 @@ filename = "Files/pothole.csv"
 
 csv_file_path = os.path.join(directory, filename)
 
-
 def get_number_of_rows(csv_file):
     with open(csv_file, mode='r') as file:
-        csv_reader = csv.DictReader(file)
+        csv_reader = csv.reader(file)
         return sum(1 for row in csv_reader)
 
 def get_row(csv_file, row_number):
+    default_headers = ['eventname', 'gps', 'speed', 'timestamp']
+    
     with open(csv_file, mode='r') as file:
-        csv_reader = csv.DictReader(file)
+        csv_reader = csv.reader(file)
         for index, row in enumerate(csv_reader, start=1):
             if index == row_number:
-                return row
+                if len(row) != len(default_headers):
+                    raise ValueError(f"Row {row_number} does not have the correct number of columns.")
+                return {header: value for header, value in zip(default_headers, row)}
     return None
 
 def parse_gps_data(csv_file, row_number):

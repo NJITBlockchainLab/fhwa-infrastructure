@@ -36,7 +36,13 @@ Also run
 
 in the main folder.
 
+eventlog
+Save the CSV file folder path as an environment variable CSV_PATH
+
+2. In the docker folder there is manage script to build the docker images
+=======
 2. 
+main
 
 If in Windows use Git Bash to run Shell scripts.
 
@@ -130,31 +136,8 @@ For I
 
 Run
 
-`python multicast.py`
+`python multicast_observer.py`
 
-And specify the frequency and number of rows to send.
-
-
-For II
-
-Run
-
-`python multicast_cyclic.py`
-
-And specify the frequency and number of rows to send. Stop the program to stop sending data.
-
-
-For III
-
-Run
-
-`python events.py`
-
-And specify the latitude and longititude of the location to send.
-For csv files change the placeholder csv files present in scripts/multicast/csv/Files
-Keep the naming same eventlog.csv and pothole.csv
-
-Run any of the 3 scripts using python
 
 
 **NOTE**
